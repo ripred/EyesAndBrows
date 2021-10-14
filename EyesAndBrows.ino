@@ -1,28 +1,37 @@
 /**
  * EyesAndBrows.ino
  * 
- * Animatronic eyes made from two ping pong balls, hinges, brass scrap, and servos.
+ * Expressive animatronic art piece/desktop toy made from two ping pong balls, 
+ * hinges, brass scrap, analog joystick w/button and 4 hobby servos.
  * Originally written for the ESP32 microcontroller.
+ * 
+ * https://github.com/ripred/EyesAndBrows
+ * 
  * Written: May 2021 Trent M. Wyatt
  * 
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Project-specific pin usage:
-/// NOTE: *These pins are for the ESP32.  
+/// *NOTE: These pins are for the ESP32.  
 /// Define a separate set for other microcontrollers.
 
 #define DBGLED              4
-#define BUTTON1             5
 
+// *NOTE: BUTTON1, IN1, and IN2 are the button and the two potentiometer inputs
+// from an analog joystick
+
+#define BUTTON1             5
 #define IN1                 34
 #define IN2                 35
 
-#define PAN_SERVO_PIN       17
-#define TILT_SERVO_PIN      16
+// servos for the eyes
+#define PAN_SERVO_PIN       17  // look left/right
+#define TILT_SERVO_PIN      16  // look up/down
 
-#define FOREHEAD_SERVO_PIN  18
-#define EYEBROW_SERVO_PIN   19
+// servos for the eyebrows
+#define FOREHEAD_SERVO_PIN  18  // raise/lower eyebrows
+#define EYEBROW_SERVO_PIN   19  // angle of eyebrows
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -31,7 +40,6 @@
 #define JITTER_FILTER   0.035
 
 #include "extservo.h"
-//#include "animate.h"
 
 ExtServo pan(PAN_SERVO_PIN, IN1);
 ExtServo tilt(TILT_SERVO_PIN, IN2);
@@ -108,13 +116,6 @@ void setup() {
 
     set_led(true);
     toggle_led();
-
-    // Allow allocation of all timers ?
-    // (the example showed this but it works without?)
-    //    ESP32PWM::allocateTimer(0);
-    //    ESP32PWM::allocateTimer(1);
-    //    ESP32PWM::allocateTimer(2);
-    //    ESP32PWM::allocateTimer(3);
 
     pan.name = "pan";
     pan.set_debug();
